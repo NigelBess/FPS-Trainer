@@ -82,7 +82,7 @@ public class GameManager : MonoBehaviour
     void LogGame()
     {
         float accuracy = (float)hits / (float)shots * 100;
-        int day = (int)(DateTime.Today - startDate).TotalDays; 
+        int day = (int)(DateTime.Today - startDate).TotalDays;
         string data = kills.ToString() + ", " + accuracy.ToString("F3") + ", " + day.ToString();
 
        dl.Save(fileName,data,true);
