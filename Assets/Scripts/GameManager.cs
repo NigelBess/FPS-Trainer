@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private string highScoreFileName = "highScore";
     [SerializeField] private Text highScoreText;
     [SerializeField] private Text welcomeHighScoreText;
+    [SerializeField] private Target target;
     private DateTime startDate = new DateTime(2019,1,1);
     private int hits;
     private int shots;
@@ -40,6 +41,7 @@ public class GameManager : MonoBehaviour
             kills = 0;
             hits = 0;
             shots = 0;
+            target.Refresh();
         }
         player.SetActive(state);
         secondaryCam.SetActive(!state);

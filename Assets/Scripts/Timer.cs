@@ -34,7 +34,7 @@ public class Timer : MonoBehaviour
             gm.Pause();
         }
         //TimeSpan t = TimeSpan.FromSeconds(remainingTime);
-        timerText.text = Mathf.Floor(remainingTime/60).ToString()+":"+((int)remainingTime-Mathf.Floor(remainingTime/60)*60).ToString();
+        timerText.text = Mathf.Floor(remainingTime/60).ToString()+":"+((int)remainingTime-Mathf.Floor(remainingTime/60)*60).ToString("00");
     }
     public void Pause()
     {

@@ -254,7 +254,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0, g: 0.914711, b: 1, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -2115,7 +2115,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enter text...
+  m_Text: 
 --- !u!222 &786535465
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2374,6 +2374,7 @@ MonoBehaviour:
   highScoreFileName: highScore
   highScoreText: {fileID: 1488445303}
   welcomeHighScoreText: {fileID: 1325095184}
+  target: {fileID: 1873683922}
 --- !u!4 &879625147
 Transform:
   m_ObjectHideFlags: 0

@@ -24,7 +24,7 @@ public class Target : MonoBehaviour
         originPoint = transform.position;
         Refresh();
     }
-    private void Refresh()
+    public void Refresh()
     {
         setHP(3);
         float dist = Random.Range(minDistance,maxDistance);
