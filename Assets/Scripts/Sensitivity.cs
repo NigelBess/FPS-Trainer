@@ -8,7 +8,7 @@ public class Sensitivity : MonoBehaviour
     [SerializeField] private InputField iField;
     [SerializeField] private DataLogger dl;
     [SerializeField] private string fileName = "sense";
-    [SerializeField] private FPSAimer aimer;
+    [SerializeField] private GameSettings settings;
     private float sense;
     private void Awake()
     {
@@ -34,6 +34,6 @@ public class Sensitivity : MonoBehaviour
         {
         }
         dl.Save(fileName, sense.ToString(), false);
-        aimer.SetSense(sense);
+       settings.sensitivity = sense;
     }
 }

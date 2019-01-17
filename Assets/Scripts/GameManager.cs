@@ -15,11 +15,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Text ScoreText;
     [SerializeField] private Text AccuracyText;
     [SerializeField] private DataLogger dl;
-    [SerializeField] private string fileName = "scores";
+    [SerializeField] private string normalFileName = "scores";
+    [SerializeField] private string insaneFileName = "insaneScores";
+    private string fileName;
     [SerializeField] private string highScoreFileName = "highScore";
     [SerializeField] private Text highScoreText;
     [SerializeField] private Text welcomeHighScoreText;
     [SerializeField] private Target target;
+    [SerializeField] private GameSettings settings;
+    [SerializeField] private Dropdown dropdown;
     private DateTime startDate = new DateTime(2019,1,1);
     private int hits;
     private int shots;
@@ -32,9 +36,17 @@ public class GameManager : MonoBehaviour
         welcomeHighScoreText.text = "High Score: " + GetHighScore().ToString();
     }
     public void StartGame(bool state)
-    {
+    {   
         if (state)
         {
+            fileName = normalFileName;
+            if (dropdown.value == 1)
+            { 
+                settings.recoil = true;
+                settings.senseChange = true;
+                settings.drop = true;
+                fileName = insaneFileName;
+            } 
             cm.HUD();
             timer.StartGame();
             killText.text = "0";
