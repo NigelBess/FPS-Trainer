@@ -21,7 +21,7 @@ public class Sensitivity : MonoBehaviour
             sense = 1.0f;
             dl.Save(fileName,sense.ToString(),false);
         }
-        iField.placeholder.GetComponent<Text>().text = sense.ToString();
+        iField.text = sense.ToString();
 
     }
     public void SetSense()

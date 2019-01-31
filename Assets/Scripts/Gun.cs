@@ -14,29 +14,43 @@ public class Gun : MonoBehaviour
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
-        {   
-            audio.Play();
-            gm.LogShot();
-            if (settings.recoil)
+        {
+            Fire();
+        }
+    }
+    IEnumerator NextShot()
+    {
+        yield return new WaitForSeconds(1.0f/settings.rateOfFire);
+        if (Input.GetMouseButton(0) && settings.fullAuto)
+        {
+            Fire();
+        }
+    }
+    private void Fire()
+    {
+        StopAllCoroutines();
+        audio.Play();
+        gm.LogShot();
+        if (settings.recoil)
+        {
+            recoil.Fire();
+        }
+        if (settings.drop)
+        {
+            GameObject.Instantiate(dropBulletPrefab, transform.position + transform.forward * bulletStartDistance, transform.rotation);
+        }
+        else
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, transform.forward, out hit))
             {
-                recoil.Fire();
+                hit.transform.gameObject.SendMessage("Shot", SendMessageOptions.DontRequireReceiver);
             }
-
-
-            if (settings.drop)
-            {
-                GameObject.Instantiate(dropBulletPrefab, transform.position + transform.forward * bulletStartDistance, transform.rotation);
-            }
-            else
-            {
-                RaycastHit hit;
-                if (Physics.Raycast(transform.position, transform.forward, out hit))
-                {
-                    hit.transform.gameObject.SendMessage("Shot", SendMessageOptions.DontRequireReceiver);
-                }
-                GameObject.Instantiate(bulletPrefab, transform.position + transform.forward * bulletStartDistance, transform.rotation);
-            }
-            
+            GameObject.Instantiate(bulletPrefab, transform.position + transform.forward * bulletStartDistance, transform.rotation);
+        }
+        if (settings.fullAuto)
+        { 
+            StartCoroutine(NextShot());
         }
     }
 }

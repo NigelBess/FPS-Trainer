@@ -24,7 +24,7 @@ public class FPSAimer : MonoBehaviour
         cam.Rotate(rotY, 0, 0);
         float yRot = cam.localRotation.eulerAngles.x;
         yRot -= Mathf.Floor(yRot / 360) * 360;
-        if (yRot > 180 && yRot <360)
+        if (yRot > 180)
         {
             yRot -= 360;
         }

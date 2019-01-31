@@ -10,6 +10,7 @@ public class Target : MonoBehaviour
     [SerializeField] private GameObject deadPrefab;
     [SerializeField] private GameManager gm;
     [SerializeField] private FPSAimer aimer;
+    private int maxHealth;
     
     private Vector3 originPoint;
     private float currentZ;
@@ -27,6 +28,7 @@ public class Target : MonoBehaviour
     }
     public void Refresh()
     {
+        maxHealth =settings.maxHealth;
         float sense = settings.sensitivity;
         if (settings.senseChange)
         {
@@ -34,7 +36,7 @@ public class Target : MonoBehaviour
         }
         aimer.SetSense(sense);
 
-        setHP(3);
+        setHP(maxHealth);
         float dist = Random.Range(settings.minDistance,settings.maxDistance);
         float angle = Random.Range(0, 360);
         float x = dist * Mathf.Cos(angle);
@@ -74,10 +76,19 @@ public class Target : MonoBehaviour
     private void setHP(int val)
     {
         hp = val;
+        if (val == maxHealth)
+        {
+            rend.material = materials[0];
+        }
+        if (val > materials.Length)
+        {
+            val = materials.Length;
+        }
         if (val > 0)
         {
             rend.material = materials[val - 1];
         }
+        
         
     }
     private void Update()

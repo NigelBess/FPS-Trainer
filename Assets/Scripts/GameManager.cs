@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private DataLogger dl;
     [SerializeField] private string normalFileName = "scores";
     [SerializeField] private string insaneFileName = "insaneScores";
+    [SerializeField] private string customFileName = "customScores";
     private string fileName;
     [SerializeField] private string highScoreFileName = "highScore";
     [SerializeField] private Text highScoreText;
@@ -34,29 +35,58 @@ public class GameManager : MonoBehaviour
         cm.Welcome();
         StartGame(false);
         welcomeHighScoreText.text = "High Score: " + GetHighScore().ToString();
+        string gameModeString = dl.Read("GameMode");
+        int gameMode;
+        try
+        {
+            gameMode = int.Parse(gameModeString);
+        }
+        catch
+        {
+            gameMode = 0;
+        }
+        dropdown.value = gameMode;
+
     }
     public void StartGame(bool state)
     {   
         if (state)
         {
+            dl.Save("GameMode",dropdown.value.ToString(),false);
             fileName = normalFileName;
-            if (dropdown.value == 1)
-            { 
-                settings.recoil = true;
-                settings.senseChange = true;
-                settings.drop = true;
-                fileName = insaneFileName;
-            } 
-            cm.HUD();
-            timer.StartGame();
-            killText.text = "0";
-            kills = 0;
-            hits = 0;
-            shots = 0;
-            target.Refresh();
+            settings.mode = (GameSettings.GameMode)dropdown.value;
+            switch ((int)settings.mode)
+            {
+                case 0:
+                    break;
+                case 1:
+                    settings.recoil = true;
+                    settings.senseChange = true;
+                    settings.drop = true;
+                    fileName = insaneFileName;
+                    break;
+                case 2:
+                    fileName = customFileName;
+                    cm.Settings();
+                    return;
+            }
+            Begin();
+            return;
         }
-        player.SetActive(state);
-        secondaryCam.SetActive(!state);
+        player.SetActive(false);
+        secondaryCam.SetActive(true);
+    }
+    public void Begin()
+    {
+        cm.HUD();
+        timer.StartGame();
+        killText.text = "0";
+        kills = 0;
+        hits = 0;
+        shots = 0;
+        target.Refresh();
+        player.SetActive(true);
+        secondaryCam.SetActive(false);
     }
     public void Resume()
     {
@@ -102,7 +132,7 @@ public class GameManager : MonoBehaviour
        dl.Save(fileName,data,true);
         int highScore = GetHighScore();
         highScoreText.text = "";
-        if (kills > highScore)
+        if ((settings.mode == GameSettings.GameMode.normal)&&(kills > highScore))
         {
             highScoreText.text = "High Score!";
             dl.Save(highScoreFileName,kills.ToString(),false);
@@ -126,5 +156,9 @@ public class GameManager : MonoBehaviour
             highScore = 0;
         }
         return highScore;
+    }
+    public void Quit()
+    {
+        Application.Quit();
     }
 }

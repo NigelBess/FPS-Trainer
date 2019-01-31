@@ -22,6 +22,10 @@ public class CanvasManager : MonoBehaviour
     {
         OpenCanvas(3);
     }
+    public void Settings()
+    {
+        OpenCanvas(4);
+    }
 
     private void OpenCanvas(int num)
     {
